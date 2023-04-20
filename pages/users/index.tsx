@@ -19,6 +19,20 @@ export const getServerSideProps = async () => {
       LastName: 'Pernica',
       Login: 'kubop',
       Address: 'Halalovka 35, 911 08 Trenčín'
+    },
+    {
+      Id: 2,
+      FirstName: 'Daddy',
+      LastName: 'Puff',
+      Login: 'dap',
+      Address: 'Soblahovská 11, 911 01 Trenčín'
+    },
+    {
+      Id: 3,
+      FirstName: 'Johanka',
+      LastName: 'z Arku',
+      Login: 'zaj',
+      Address: '1'
     }
   ]
 
