@@ -67,7 +67,7 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
                           Address
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Action
+                          Actions
                       </th>
                   </tr>
               </thead>
@@ -89,6 +89,9 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
                       <td className="px-6 py-4">
                           <Link href={`/users/${user.Id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             Edit
+                          </Link>
+                          <Link href={`/users/delete/${user.Id}`} className="ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                            Delete
                           </Link>
                       </td>
                     </tr>
