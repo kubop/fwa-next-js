@@ -9,6 +9,8 @@ type User = {
   "lastName": string,
   "login": string,
   "password": string,
+  "uAddressId": number,
+  "aAddressId": number,
   "street": string,
   "number": number,
   "city": string,
@@ -64,7 +66,7 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
                         {user.login}
                       </td>
                       <td className="px-6 py-4">
-                        {`${user.street} ${user.number}, ${user.zipCode} ${user.city}`} 
+                        {user.aAddressId !== null ? `${user.street} ${user.number}, ${user.zipCode} ${user.city}` : user.uAddressId}
                       </td>
                       <td className="px-6 py-4">
                           <Link href={`/users/${user.userId}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
