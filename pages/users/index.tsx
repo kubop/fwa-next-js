@@ -4,40 +4,20 @@ import { InferGetServerSidePropsType } from "next"
 type Users = User[]
 
 type User = {
-  Id: number,
-  FirstName: string,
-  LastName: string,
-  Login: string,
-  Address: string,
+  "userId": number,
+  "firstName": string,
+  "lastName": string,
+  "login": string,
+  "password": string,
+  "street": string,
+  "number": number,
+  "city": string,
+  "zipCode": string
 }
 
 export const getServerSideProps = async () => {
-  //const res = await fetch('https://www.bitstamp.net/api/v2/ticker/btcusd/') // TODO: Fetch users from backend
-  const users: Users = [
-    {
-      Id: 1,
-      FirstName: 'Jakub',
-      LastName: 'Pernica',
-      Login: 'kubop',
-      Address: 'Halalovka 35, 911 08 Trenčín'
-    },
-    {
-      Id: 2,
-      FirstName: 'Daddy',
-      LastName: 'Puff',
-      Login: 'dap',
-      Address: 'Soblahovská 11, 911 01 Trenčín'
-    },
-    {
-      Id: 3,
-      FirstName: 'Johanka',
-      LastName: 'z Arku',
-      Login: 'zaj',
-      Address: '1'
-    }
-  ]
-
-  await new Promise(resolve => setTimeout(resolve, 3000)); // Artificial delay
+  const res = await fetch('https://127.0.0.1:7005/api/User')
+  const users: Users = await res.json()
 
   return {
     props: {
@@ -73,24 +53,24 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
               </thead>
               <tbody>
                 {users.map(user => 
-                    <tr key={user.Id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <tr key={user.userId} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                       <td className="px-6 py-4">
-                          {user.FirstName}
+                          {user.firstName}
                       </td>
                       <td className="px-6 py-4">
-                        {user.LastName}
+                        {user.lastName}
                       </td>
                       <td className="px-6 py-4">
-                        {user.Login}
+                        {user.login}
                       </td>
                       <td className="px-6 py-4">
-                        {user.Address}
+                        {`${user.street} ${user.number}, ${user.zipCode} ${user.city}`} 
                       </td>
                       <td className="px-6 py-4">
-                          <Link href={`/users/${user.Id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                          <Link href={`/users/${user.userId}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             Edit
                           </Link>
-                          <Link href={`/users/delete/${user.Id}`} className="ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                          <Link href={`/users/delete/${user.userId}`} className="ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                             Delete
                           </Link>
                       </td>
