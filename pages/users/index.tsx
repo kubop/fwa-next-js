@@ -30,7 +30,7 @@ export const getServerSideProps = async () => {
 
 export default function Users({ users }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <main className="flex items-center justify-between p-12">
+    <main className="flex items-center justify-center p-12">
       
       <div className="shadow-md sm:rounded-lg overflow-auto">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
