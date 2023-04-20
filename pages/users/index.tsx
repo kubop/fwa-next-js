@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { InferGetServerSidePropsType } from "next"
 
 type Users = User[]
@@ -71,26 +72,27 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
                   </tr>
               </thead>
               <tbody>
-                  {users.map(user => 
-                      <tr key={user.Id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                        <td className="px-6 py-4">
-                            {user.FirstName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {user.LastName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {user.Login}
-                        </td>
-                        <td className="px-6 py-4">
-                          {user.Address}
-                        </td>
-                        <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> 
-                            {/* TODO: Change to <Link> when we have [id].tsx finished */}
-                        </td>
-                      </tr>
-                  )}
+                {users.map(user => 
+                    <tr key={user.Id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                      <td className="px-6 py-4">
+                          {user.FirstName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {user.LastName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {user.Login}
+                      </td>
+                      <td className="px-6 py-4">
+                        {user.Address}
+                      </td>
+                      <td className="px-6 py-4">
+                          <Link href={`/users/${user.Id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Edit
+                          </Link>
+                      </td>
+                    </tr>
+                )}
               </tbody>
           </table>
       </div>
