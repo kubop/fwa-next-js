@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function User({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user, addresses } = data
   
-  const [formData, setFormData] = useState(user)
+  const [formData, setFormData] = useState<User>(user)
   const [alert, setAlert] = useState('')
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
