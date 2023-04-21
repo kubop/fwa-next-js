@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-export default function User({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function User({ data }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   const { user, addresses } = data
   
   const [formData, setFormData] = useState<User>(user)
