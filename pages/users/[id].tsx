@@ -1,4 +1,4 @@
-import { InferGetServerSidePropsType } from "next"
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useState } from 'react'
 
 type UserAddresses = {
@@ -25,14 +25,14 @@ type Address = {
   "zipCode": string
 }
 
-export const getServerSideProps = async ({ params }: any) => {
-  const res = await fetch(`https://127.0.0.1:7005/api/User/${params.id}`)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(`https://127.0.0.1:7005/api/User/${context.params?.id}`)
   const data: UserAddresses = await res.json()
 
   return {
     props: {
-      data,
-    },
+      data
+    }
   }
 }
 
