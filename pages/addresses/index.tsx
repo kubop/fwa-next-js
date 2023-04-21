@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import { InferGetServerSidePropsType } from "next"
-
-type Addresses = Address[]
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 
 type Address = {
   "countUsers": number,
@@ -12,9 +10,13 @@ type Address = {
   "zipCode": string
 }
 
-export const getServerSideProps = async () => {
+interface MyPageProps {
+  addresses: Address[]
+}
+
+export const getServerSideProps: GetServerSideProps<MyPageProps> = async () => {
   const res = await fetch('https://127.0.0.1:7005/api/Address')
-  const addresses: Addresses = await res.json()
+  const addresses: Address[] = await res.json()
 
   return {
     props: {

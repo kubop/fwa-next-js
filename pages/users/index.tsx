@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import { InferGetServerSidePropsType } from "next"
-
-type Users = User[]
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 
 type User = {
   "userId": number,
@@ -13,9 +11,13 @@ type User = {
   "address": string
 }
 
-export const getServerSideProps = async () => {
+interface MyPageProps {
+  users: User[]
+}
+
+export const getServerSideProps: GetServerSideProps<MyPageProps> = async () => {
   const res = await fetch('https://127.0.0.1:7005/api/User')
-  const users: Users = await res.json()
+  const users: User[] = await res.json()
 
   return {
     props: {
