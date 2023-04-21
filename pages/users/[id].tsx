@@ -42,7 +42,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
   const [formData, setFormData] = useState(user)
   const [alert, setAlert] = useState('')
 
-  function handleChange(e: any) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
     setFormData({
       ...formData,
@@ -50,9 +50,8 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
     })
   }
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-
 
     fetch(`https://127.0.0.1:7005/api/user/${user.userId}`,{
       method: 'PUT',
@@ -71,7 +70,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
     })
   }
 
-  function handleCloseAlert(e: any) {
+  function handleCloseAlert(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     setAlert('')
   }
 
@@ -100,8 +99,8 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
         <div className="mb-6">
           <label htmlFor="addressId" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
           <select name="addressId" defaultValue={formData.addressId} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            {!addresses.some(a => a.addressId === user.addressId) ? <option value={user.addressId}>{user.addressId}</option> : null}
-            {addresses.map(address => 
+            {!addresses.some((a: Address) => a.addressId === user.addressId) ? <option value={user.addressId}>{user.addressId}</option> : null}
+            {addresses.map((address: Address) => 
               <option 
                 key={address.addressId}
                 value={address.addressId}
