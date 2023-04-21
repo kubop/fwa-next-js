@@ -42,7 +42,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
   const [formData, setFormData] = useState(user)
   const [alert, setAlert] = useState('')
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLInputElement>) {
     const { name, value } = e.target
     setFormData({
       ...formData,
