@@ -7,22 +7,22 @@ type UserAddresses = {
 }
 
 type User = {
-  "userId": number,
-  "firstName": string,
-  "lastName": string,
-  "login": string,
-  "password": string,
-  "newPassword": string,
-  "addressId": number,
-  "address": string
+  userId: number,
+  firstName: string,
+  lastName: string,
+  login: string,
+  password: string,
+  newPassword: string,
+  addressId: number,
+  address: string
 }
 
 type Address = {
-  "addressId": number,
-  "street": string,
-  "number": number,
-  "city": string,
-  "zipCode": string
+  addressId: number,
+  street: string,
+  number: number,
+  city: string,
+  zipCode: string
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

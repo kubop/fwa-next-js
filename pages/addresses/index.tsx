@@ -2,12 +2,12 @@ import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 
 type Address = {
-  "countUsers": number,
-  "addressId": number,
-  "street": string,
-  "number": number,
-  "city": string,
-  "zipCode": string
+  countUsers: number,
+  addressId: number,
+  street: string,
+  number: number,
+  city: string,
+  zipCode: string
 }
 
 interface MyPageProps {
