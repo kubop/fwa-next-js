@@ -59,10 +59,10 @@ export default function Addresses({ addresses }: InferGetServerSidePropsType<typ
                       {address.countUsers}
                     </td>
                     <td className="px-6 py-4">
-                        <Link href={`/address/${address.addressId}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <Link href={`/addresses/${address.addressId}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                           Edit
                         </Link>
-                        <Link href={`/address/delete/${address.addressId}`} className="ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                        <Link href={`/addresses/delete/${address.addressId}`} className="ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                           Delete
                         </Link>
                     </td>
