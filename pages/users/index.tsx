@@ -42,7 +42,7 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
     setShowDeletePopup(userId)
   }
 
-  function handleSortByClick(e: any, newSortBy: string) {
+  function handleSortByClick(e: React.MouseEvent<HTMLTableCellElement, MouseEvent>, newSortBy: string) {
     let oldSortBy = router.query?.orderBy
 
     if (oldSortBy === newSortBy + `_DESC`) {
