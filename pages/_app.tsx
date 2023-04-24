@@ -8,7 +8,7 @@ import NProgress from "nprogress";
 
 import Layout from '../components/Layout'
 
-export default function App({ Component, pageProps, router }: AppProps): JSX.Element {
+export default function App({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
     const handleRouteDone = () => NProgress.done();
