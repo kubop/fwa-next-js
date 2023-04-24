@@ -110,7 +110,7 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
                               <button onClick={(e) => handleDeleteButtonClicked(e, user.userId)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                                   Confirm delete
                               </button>
-                              <button onClick={() => setShowDeletePopup(null)} className="w-max ml-2 font-medium text-red-600 dark:text-red-500 hover:underline">Undo</button>
+                              <button onClick={() => setShowDeletePopup(null)} className="w-max ml-2 font-medium text-red-400 dark:text-red-500 hover:underline">Undo</button>
                             </div>
                             ) : (
                               <button onClick={() => setShowDeletePopup(user.userId)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
