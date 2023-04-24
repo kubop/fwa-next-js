@@ -1,20 +1,8 @@
 import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import { Address } from '../../ts-types/types'
 
-type Address = {
-  countUsers: number,
-  addressId: number,
-  street: string,
-  number: number,
-  city: string,
-  zipCode: string
-}
-
-interface MyPageProps {
-  addresses: Address[]
-}
-
-export const getServerSideProps: GetServerSideProps<MyPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<{addresses: Address[]}> = async () => {
   const res = await fetch('https://127.0.0.1:7005/api/Address')
   const addresses: Address[] = await res.json()
 

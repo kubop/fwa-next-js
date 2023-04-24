@@ -1,31 +1,8 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useState } from 'react'
+import { UserAddresses, User, Address } from '../../ts-types/types'
 
-type UserAddresses = {
-  user: User,
-  addresses: Address[]
-}
-
-type User = {
-  userId: number,
-  firstName: string,
-  lastName: string,
-  login: string,
-  password: string,
-  newPassword: string,
-  addressId: number,
-  address: string
-}
-
-type Address = {
-  addressId: number,
-  street: string,
-  number: number,
-  city: string,
-  zipCode: string
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = async (context) => {
   const res = await fetch(`https://127.0.0.1:7005/api/User/${context.params?.id}`)
   const data: UserAddresses = await res.json()
 
@@ -61,10 +38,8 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
       }
     }).then((res) => {
       if (res.ok) {
-        console.log('form data sent successfully')
         setAlert('success')
       } else {
-        console.log('error sending form data')
         setAlert('error')
       }
     })

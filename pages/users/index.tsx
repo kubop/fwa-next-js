@@ -1,21 +1,8 @@
 import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import { User } from '../../ts-types/types'
 
-type User = {
-  userId: number,
-  firstName: string,
-  lastName: string,
-  login: string,
-  password: string,
-  addressId: number,
-  address: string
-}
-
-interface MyPageProps {
-  users: User[]
-}
-
-export const getServerSideProps: GetServerSideProps<MyPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<{users: User[]}> = async () => {
   const res = await fetch('https://127.0.0.1:7005/api/User')
   const users: User[] = await res.json()
 
