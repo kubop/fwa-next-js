@@ -3,7 +3,7 @@ import Link from "next/link"
 import router from "next/router"
 import { useState } from "react"
 
-interface TableProps {
+export interface TableProps {
     tableHeaders: TableHeader[],
     tableRows: {
         id: string, // What's the id property key called, for user it's userId, for address it's addressId etc...
@@ -13,7 +13,7 @@ interface TableProps {
     apiPath: string,
 }
 
-interface TableHeader {
+export interface TableHeader {
     objectKey: string,
     label: string,
     sortByName?: string,

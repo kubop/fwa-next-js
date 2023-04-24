@@ -3,13 +3,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { User } from '../../ts-types/types'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Table from '@/components/Table'
+import Table, { TableHeader } from '@/components/Table'
 
-interface TableHeader {
-  objectKey: string,
-  label: string,
-  sortByName?: string,
-}
 
 export const getServerSideProps: GetServerSideProps<{users: User[]}> = async (context) => {
   const res = await fetch(`https://127.0.0.1:7005/api/User?orderBy=${context.query?.orderBy}`)
