@@ -92,7 +92,7 @@ export default function Table<T extends {}>({ tableHeaders, tableRows, apiPath, 
                     <tr key={row[tableRows.id as keyof typeof row] as React.Key} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                         {tableHeaders.map((header, index) => // Using key={index} should be fine here?
                             <td key={index} className="px-6 py-4"> 
-                                {row[header.objectKey as keyof typeof row] as string}
+                                {row[header.objectKey as keyof typeof row] as React.ReactNode}
                             </td>
                         )}
                         <td className="px-6 py-4 flex">
