@@ -19,8 +19,8 @@ export default function Home() {
         <ul>
           <li>✅ Full view with count of users</li>
           <li>❌ <s>Fully implemented Edit</s></li>
-          <li>❌ <s>Fully implemented Delete with Confirmation</s></li>
-          <li>❌ <s>Fully implemented sorting by ALL columns</s></li>
+          <li>✅ Fully implemented Delete with Confirmation</li>
+          <li>✅ Fully implemented sorting by ALL columns</li>
         </ul>
       </div>
 
