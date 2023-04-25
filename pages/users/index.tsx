@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 import Table, { TableHeader } from '@/components/Table'
 
 
-export const getServerSideProps: GetServerSideProps<{users: User[]}> = async (context) => {
-  const res = await fetch(`https://127.0.0.1:7005/api/User?orderBy=${context.query?.orderBy}`)
+export const getServerSideProps: GetServerSideProps<{users: User[]}> = async () => {
+  const res = await fetch(`https://127.0.0.1:7005/api/User`)
   const users: User[] = await res.json()
 
   return {

@@ -3,8 +3,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { Address } from '../../ts-types/types'
 import Table, { TableHeader } from '@/components/Table'
 
-export const getServerSideProps: GetServerSideProps<{addresses: Address[]}> = async (context) => {
-  const res = await fetch(`https://127.0.0.1:7005/api/Address?orderBy=${context.query?.orderBy}`)
+export const getServerSideProps: GetServerSideProps<{addresses: Address[]}> = async () => {
+  const res = await fetch(`https://127.0.0.1:7005/api/Address`)
   const addresses: Address[] = await res.json()
 
   return {
