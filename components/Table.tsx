@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export interface TableProps {
     tableHeaders: TableHeader[],
@@ -25,26 +25,28 @@ export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: Ta
 
     const [tableData, setTableData] = useState(tableRows.data)
     const [showDeletePopup, setShowDeletePopup] = useState<number | null>(null)
-    const [sortBy, setSortBy] = useState("")
+    const [sortBy, setSortBy] = useState<string>("") 
 
     function handleSortByClick(sortByNew: string | undefined) {
-        if (sortByNew) {
-            if (sortBy === sortByNew + `_DESC`) {
-                sortByNew = ""
+        setSortBy(old => {
+            if (old === sortByNew + `_DESC`) {
+                return ""
             }
-            else if (sortBy === sortByNew) {
-                sortByNew = sortBy + `_DESC`
+            else if (old === sortByNew) {
+                return old + `_DESC`
+            } else {
+                return sortByNew ? sortByNew : ""
             }
-         
-            setSortBy(sortByNew)
-            
-            const res =  fetch(`${apiPath}?orderBy=${sortByNew}`).then((res) => {
-                res.json().then(res => {
-                    setTableData(res)
-                })
-            })
-        }
+        })
     }
+
+    useEffect(() => {
+        const res =  fetch(`${apiPath}?orderBy=${sortBy}`).then((res) => {
+            res.json().then(res => {
+                setTableData(res)
+            })
+        })
+    }, [apiPath, sortBy])
 
     function handleDeleteButtonClicked(e: React.MouseEvent<HTMLButtonElement | MouseEvent>, id: number) {
         if (id === showDeletePopup) {
