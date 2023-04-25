@@ -22,3 +22,8 @@ export interface UserAddresses {
     user: User,
     addresses: Address[]
 }
+
+export interface Response {
+    type: string,
+    message: string,
+}
