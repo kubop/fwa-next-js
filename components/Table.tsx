@@ -12,9 +12,9 @@ export interface TableProps {
 }
 
 export interface TableHeader {
-    objectKey: string,
-    label: string,
-    sortByName?: string,
+    objectKey: string,      // This is how is the property key called in the object
+    label: string,          // This is what we display in the table header
+    sortByName?: string,    // For the backend sorting
 }
 
 export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: TableProps) {

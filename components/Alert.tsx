@@ -1,7 +1,7 @@
 interface AlertProps {
     type: string,
     text: string,
-    onClose: any
+    onClose: () => void
 }
 
 export default function Alert({ type, text, onClose }: AlertProps) {
