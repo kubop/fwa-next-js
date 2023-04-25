@@ -1,11 +1,11 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-export interface TableProps {
+export interface TableProps<T> {
     tableHeaders: TableHeader[],
     tableRows: {
         id: string, // What's the id property key called, for user it's userId, for address it's addressId etc...
-        data: any[],
+        data: T[],
     },
     pagePath: string,
     apiPath: string,
@@ -17,7 +17,7 @@ export interface TableHeader {
     sortByName?: string,    // For the backend sorting
 }
 
-export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: TableProps) {
+export default function Table<T extends {}>({ tableHeaders, tableRows, apiPath, pagePath }: TableProps<T>) {
     // Normalize api path
     if (apiPath.endsWith('/')) {
         apiPath = apiPath.substring(0, apiPath.length - 1)
@@ -60,7 +60,7 @@ export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: Ta
                 }
             }).then((res) => {
                 if (res.ok) {
-                    const updatedTableData = tableData.filter(d => d[tableRows.id] !== id)
+                    const updatedTableData = tableData.filter(d => d[tableRows.id as keyof typeof d] !== id)
                     setTableData(updatedTableData)
                 } else {
                     console.log('Handle error delete used popup')
@@ -89,25 +89,25 @@ export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: Ta
             </thead>
             <tbody>
                 {tableData.map(row => 
-                    <tr key={row[tableRows.id]} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <tr key={row[tableRows.id as keyof typeof row] as React.Key} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                         {tableHeaders.map((header, index) => // Using key={index} should be fine here?
                             <td key={index} className="px-6 py-4"> 
-                                {row[header.objectKey as keyof typeof row]}
+                                {row[header.objectKey as keyof typeof row] as string}
                             </td>
                         )}
                         <td className="px-6 py-4 flex">
-                            <Link href={`/${pagePath}/${row[tableRows.id]}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            <Link href={`/${pagePath}/${row[tableRows.id as keyof typeof row]}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 Edit
                             </Link>     
-                            {showDeletePopup === row[tableRows.id] ? (
+                            {showDeletePopup === row[tableRows.id as keyof typeof row] ? (
                                 <div className="flex">
-                                <button onClick={(e) => handleDeleteButtonClicked(e, row[tableRows.id])} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                                <button onClick={(e) => handleDeleteButtonClicked(e, row[tableRows.id as keyof typeof row] as number)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                                     Confirm delete
                                 </button>
                                 <button onClick={() => setShowDeletePopup(null)} className="w-max ml-2 font-medium text-red-400 dark:text-red-500 hover:underline">Undo</button>
                                 </div>
                             ) : (
-                                <button onClick={() => setShowDeletePopup(row[tableRows.id])} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                                <button onClick={() => setShowDeletePopup(row[tableRows.id as keyof typeof row] as number)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                                     Delete
                                 </button>
                             )}                 
