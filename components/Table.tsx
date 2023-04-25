@@ -25,9 +25,9 @@ export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: Ta
 
     const [tableData, setTableData] = useState(tableRows.data)
     const [showDeletePopup, setShowDeletePopup] = useState<number | null>(null)
-    const [sortBy, setSortBy] = useState<string>("") 
+    const [sortBy, setSortBy] = useState("") 
 
-    function handleSortByClick(sortByNew: string | undefined) {
+    function handleSortByClick(sortByNew: string) {
         setSortBy(old => {
             if (old === sortByNew + `_DESC`) {
                 return ""
@@ -35,7 +35,7 @@ export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: Ta
             else if (old === sortByNew) {
                 return old + `_DESC`
             } else {
-                return sortByNew ? sortByNew : ""
+                return sortByNew
             }
         })
     }
@@ -77,7 +77,7 @@ export default function Table({ tableHeaders, tableRows, apiPath, pagePath }: Ta
                         <th key={index} 
                             scope="col" 
                             className={`px-6 py-3 ${th.sortByName && `hover:underline cursor-pointer`}`}
-                            onClick={th.sortByName ? () => handleSortByClick(th.sortByName) : undefined}
+                            onClick={() => handleSortByClick(th.sortByName ?? "")}
                         >
                             {th.label}
                         </th>
