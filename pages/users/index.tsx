@@ -4,7 +4,7 @@ import Table, { TableHeader } from '@/components/Table'
 
 
 export const getServerSideProps: GetServerSideProps<{users: User[]}> = async () => {
-  const res = await fetch(`https://127.0.0.1:7005/api/User`)
+  const res = await fetch(process.env.NEXT_PUBLIC_API_PATH_USER)
   const users: User[] = await res.json()
 
   return {
@@ -29,7 +29,7 @@ export default function Users({ users }: InferGetServerSidePropsType<typeof getS
           tableHeaders={tableHeaders} 
           tableRows={{id: "userId", data: users}} 
           pagePath='users'
-          apiPath="https://127.0.0.1:7005/api/user/"
+          apiPath={process.env.NEXT_PUBLIC_API_PATH_USER}
         />
       </div>
     </main>

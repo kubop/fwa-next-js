@@ -4,7 +4,7 @@ import { UserAddresses, User, Address, Response } from '../../ts-types/types'
 import Alert from "@/components/Alert"
 
 export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = async (context) => {
-  const res = await fetch(`https://127.0.0.1:7005/api/User/${context.params?.id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${context.params?.id}`)
   const data: UserAddresses = await res.json()
 
   return {
@@ -31,7 +31,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    fetch(`https://127.0.0.1:7005/api/user/${user.userId}`,{
+    fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${user.userId}`,{
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: {

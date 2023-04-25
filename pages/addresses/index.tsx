@@ -3,7 +3,7 @@ import { Address } from '../../ts-types/types'
 import Table, { TableHeader } from '@/components/Table'
 
 export const getServerSideProps: GetServerSideProps<{addresses: Address[]}> = async () => {
-  const res = await fetch(`https://127.0.0.1:7005/api/Address`)
+  const res = await fetch(process.env.NEXT_PUBLIC_API_PATH_ADDRESS)
   const addresses: Address[] = await res.json()
 
   return {
@@ -29,7 +29,7 @@ export default function Addresses({ addresses }: InferGetServerSidePropsType<typ
           tableHeaders={tableHeaders} 
           tableRows={{id: "addressId", data: addresses}} 
           pagePath='addresses'
-          apiPath="https://127.0.0.1:7005/api/address/"
+          apiPath={process.env.NEXT_PUBLIC_API_PATH_ADDRESS}
         />
       </div>
     </main>

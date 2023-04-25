@@ -4,7 +4,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useState } from "react"
 
 export const getServerSideProps: GetServerSideProps<{data: Address}> = async (context) => {
-  const res = await fetch(`https://127.0.0.1:7005/api/address/${context.params?.id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH_ADDRESS}/${context.params?.id}`)
   const data: Address = await res.json()
 
   return {
@@ -29,7 +29,7 @@ export default function Address({ data }: InferGetServerSidePropsType<typeof get
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    fetch(`https://127.0.0.1:7005/api/address/${data.addressId}`,{
+    fetch(`${process.env.NEXT_PUBLIC_API_PATH_ADDRESS}/${data.addressId}`,{
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: {
