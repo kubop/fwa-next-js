@@ -18,7 +18,7 @@ export default function Home() {
         <h2 className="font-semibold text-3xl">Addresses:</h2>
         <ul>
           <li>✅ Full view with count of users</li>
-          <li>❌ <s>Fully implemented Edit</s></li>
+          <li>✅ Fully implemented Edit</li>
           <li>✅ Fully implemented Delete with Confirmation</li>
           <li>✅ Fully implemented sorting by ALL columns</li>
         </ul>
