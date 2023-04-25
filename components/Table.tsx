@@ -60,7 +60,7 @@ export default function Table<T extends {}>({ tableHeaders, tableRows, apiPath, 
                 }
             }).then((res) => {
                 if (res.ok) {
-                    const updatedTableData = tableData.filter(d => d[tableRows.id as keyof typeof d] !== id)
+                    const updatedTableData = tableData.filter(d => d[tableRows.id as keyof T] !== id)
                     setTableData(updatedTableData)
                 } else {
                     console.log('Handle error delete used popup')
@@ -89,25 +89,25 @@ export default function Table<T extends {}>({ tableHeaders, tableRows, apiPath, 
             </thead>
             <tbody>
                 {tableData.map(row => 
-                    <tr key={row[tableRows.id as keyof typeof row] as React.Key} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <tr key={row[tableRows.id as keyof T] as React.Key} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                         {tableHeaders.map((header, index) => // Using key={index} should be fine here?
                             <td key={index} className="px-6 py-4"> 
                                 {row[header.objectKey as keyof typeof row] as React.ReactNode}
                             </td>
                         )}
                         <td className="px-6 py-4 flex">
-                            <Link href={`/${pagePath}/${row[tableRows.id as keyof typeof row]}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            <Link href={`/${pagePath}/${row[tableRows.id as keyof T]}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 Edit
                             </Link>     
-                            {showDeletePopup === row[tableRows.id as keyof typeof row] ? (
+                            {showDeletePopup === row[tableRows.id as keyof T] ? (
                                 <div className="flex">
-                                <button onClick={(e) => handleDeleteButtonClicked(e, row[tableRows.id as keyof typeof row] as number)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                                <button onClick={(e) => handleDeleteButtonClicked(e, row[tableRows.id as keyof T] as number)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                                     Confirm delete
                                 </button>
                                 <button onClick={() => setShowDeletePopup(null)} className="w-max ml-2 font-medium text-red-400 dark:text-red-500 hover:underline">Undo</button>
                                 </div>
                             ) : (
-                                <button onClick={() => setShowDeletePopup(row[tableRows.id as keyof typeof row] as number)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
+                                <button onClick={() => setShowDeletePopup(row[tableRows.id as keyof T] as number)} className="w-max ml-3 font-medium text-red-600 dark:text-red-500 hover:underline">
                                     Delete
                                 </button>
                             )}                 
