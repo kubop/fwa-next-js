@@ -39,7 +39,7 @@ export default function Address({ data }: InferGetServerSidePropsType<typeof get
       if (res.ok) {
         setResponse({
           type: "success",
-          message: "Success! User updated"
+          message: "Success! Address updated"
         })
       } else {
         res.text().then(text =>
