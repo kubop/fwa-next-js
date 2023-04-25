@@ -17,7 +17,7 @@ export interface TableHeader {
     sortByName?: string,    // For the backend sorting
 }
 
-export default function Table<T extends {}>({ tableHeaders, tableRows, apiPath, pagePath }: TableProps<T>) {
+export default function Table<T>({ tableHeaders, tableRows, apiPath, pagePath }: TableProps<T>) {
     // Normalize api path
     if (apiPath.endsWith('/')) {
         apiPath = apiPath.substring(0, apiPath.length - 1)
