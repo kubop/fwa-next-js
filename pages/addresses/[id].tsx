@@ -6,7 +6,7 @@ import { useState } from "react"
 export const getServerSideProps: GetServerSideProps<{data: Address}> = async (context) => {
   const res = await fetch(`https://127.0.0.1:7005/api/address/${context.params?.id}`)
   const data: Address = await res.json()
-  console.log(data)
+
   return {
     props: {
       data
@@ -36,7 +36,6 @@ export default function Address({ data }: InferGetServerSidePropsType<typeof get
         'Content-Type': 'application/json'
       }
     }).then((res) => {
-      console.log(res)
       if (res.ok) {
         setResponse({
           type: "success",
