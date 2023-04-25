@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { Address } from '../../ts-types/types'
 import Table, { TableHeader } from '@/components/Table'

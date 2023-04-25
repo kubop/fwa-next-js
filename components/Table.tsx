@@ -1,6 +1,4 @@
-import { User } from "@/ts-types/types"
 import Link from "next/link"
-import router from "next/router"
 import { useState } from "react"
 
 export interface TableProps {

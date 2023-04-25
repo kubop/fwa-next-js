@@ -1,8 +1,5 @@
-import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { User } from '../../ts-types/types'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import Table, { TableHeader } from '@/components/Table'
 
 
