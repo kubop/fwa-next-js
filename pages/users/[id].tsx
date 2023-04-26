@@ -22,10 +22,10 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target
-    setFormData({
-      ...formData,
+    setFormData(old => ({
+      ...old,
       [name]: value
-    })
+    }))
   }
 
   function getAddressValues(): SelectValue[] {
