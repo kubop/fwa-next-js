@@ -16,10 +16,18 @@ export function UserEditsProvider({ children }: { children: React.ReactNode }) {
             const json = await response.json();
             console.log(json)
 
-            dispatch({
-                type: 'increment',
-                byValue: 1
-            })
+            // 33% change of incrementing value
+            const rnd = Math.random() * 100
+            if (rnd <= 33) {
+                console.log('We are incrementing!')
+                dispatch({
+                    type: 'increment',
+                    byValue: 1
+                })
+            } else {
+                console.log('We are NOT incrementing!')
+                // Do nothing?
+            }
         }
 
         // Call the fetch function immediately to initialize the data
