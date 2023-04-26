@@ -1,9 +1,9 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useState } from 'react'
-import { UserAddresses, User, Address, Response } from '../../ts-types/types'
-import Alert from "@/components/Alert"
+import { UserAddresses, User, Address } from '../../ts-types/types'
 import Input from "@/components/Input"
 import Select, { SelectValue } from "@/components/Select"
+import EditForm from "@/components/EditForm"
 
 export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = async (context) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${context.params?.id}`)
@@ -18,42 +18,13 @@ export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = asy
 
 export default function User({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user, addresses } = data
-  
   const [formData, setFormData] = useState<User>(user)
-  const [response, setResponse] = useState<Response | null>(null)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value
-    })
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-
-    fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${user.userId}`,{
-      method: 'PUT',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => {
-      console.log(res)
-      if (res.ok) {
-        setResponse({
-          type: "success",
-          message: "Success! User updated"
-        })
-      } else {
-        res.text().then(text =>
-          setResponse({
-            type: "error",
-            message: text
-          })
-        )
-      }
     })
   }
 
@@ -78,8 +49,11 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
 
   return (
     <main className="flex items-center justify-center p-12">
-      
-      <form onSubmit={handleSubmit}>
+      <EditForm
+        apiPath={`${process.env.NEXT_PUBLIC_API_PATH_USER}/${user.userId}`}
+        method='PUT'
+        formData={formData}
+      >
         <div className="mb-6">
           <Input 
             name="firstName"
@@ -127,16 +101,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
             onChange={handleChange}
           />
         </div>
-
-        {response && 
-          <Alert type={response.type} text={response.message} onClose={() => setResponse(null)} />
-        }
-
-        <div className="flex justify-center">
-          <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-        </div>
-      </form>
-
+      </EditForm>
     </main>
   )
 }
