@@ -6,7 +6,6 @@ interface EditFormProps<T> {
     children: React.ReactNode
     apiPath: string,
     method: string
-
     formData: T
 }
 
@@ -26,7 +25,7 @@ export default function EditForm<T>({ children, apiPath, method, formData }: Edi
             if (res.ok) {
                 setResponse({
                     type: "success",
-                    message: "Success! User updated"
+                    message: "Successfully updated!"
                 })
             } else {
             res.text().then(text =>
