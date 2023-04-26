@@ -25,15 +25,16 @@ export default function EditForm<T>({ children, apiPath, method, formData }: Edi
             if (res.ok) {
                 setResponse({
                     type: "success",
-                    message: "Successfully updated!"
+                    message: "Successfully updated!" // Can get success message from backend, same as for error
                 })
             } else {
-            res.text().then(text =>
-                setResponse({
-                    type: "error",
-                    message: text
-                })
-            )}
+                res.text().then(text =>
+                    setResponse({
+                        type: "error",
+                        message: text
+                    })
+                )
+            }
         })
     }
 
