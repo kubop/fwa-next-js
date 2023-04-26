@@ -7,6 +7,7 @@ import 'nprogress/nprogress.css'
 import NProgress from "nprogress";
 
 import Layout from '../components/Layout'
+import { UserEditsProvider } from '@/contexts/UserEditsContext'
 
 export default function App({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
@@ -26,8 +27,10 @@ export default function App({ Component, pageProps, router }: AppProps) {
   }, [router.events])
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <UserEditsProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </UserEditsProvider>
   )
 }

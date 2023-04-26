@@ -6,10 +6,11 @@ interface EditFormProps<T> {
     children: React.ReactNode
     apiPath: string,
     method: string
-    formData: T
+    formData: T,
+    handleSuccess(): void
 }
 
-export default function EditForm<T>({ children, apiPath, method, formData }: EditFormProps<T>) {
+export default function EditForm<T>({ children, apiPath, method, formData, handleSuccess }: EditFormProps<T>) {
     const [response, setResponse] = useState<Response | null>(null)
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -27,6 +28,8 @@ export default function EditForm<T>({ children, apiPath, method, formData }: Edi
                     type: "success",
                     message: "Successfully updated!" // Can get success message from backend, same as for error
                 })
+
+                handleSuccess()
             } else {
                 res.text().then(text =>
                     setResponse({

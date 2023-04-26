@@ -4,6 +4,7 @@ import { UserAddresses, User, Address } from '../../ts-types/types'
 import Input from "@/components/Input"
 import Select, { SelectValue } from "@/components/Select"
 import EditForm from "@/components/EditForm"
+import { useUserEditsDispatch } from "@/contexts/UserEditsContext"
 
 export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = async (context) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${context.params?.id}`)
@@ -19,6 +20,8 @@ export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = asy
 export default function User({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user, addresses } = data
   const [formData, setFormData] = useState<User>(user)
+
+  const userEditsDispatch = useUserEditsDispatch()
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -53,6 +56,12 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
         apiPath={`${process.env.NEXT_PUBLIC_API_PATH_USER}/${user.userId}`}
         method='PUT'
         formData={formData}
+        handleSuccess={() => {
+          userEditsDispatch({
+            type: 'increment',
+            byValue: 100
+          })
+        }}
       >
         <div className="mb-6">
           <Input 
