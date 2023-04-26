@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { memo, useState } from "react"
 import { Response } from "@/ts-types/types"
 import Alert from "./Alert"
 
@@ -9,7 +9,7 @@ interface EditFormProps<T> {
     formData: T
 }
 
-export default function EditForm<T>({ children, apiPath, method, formData }: EditFormProps<T>) {
+export default memo(function EditForm<T>({ children, apiPath, method, formData }: EditFormProps<T>) {
     const [response, setResponse] = useState<Response | null>(null)
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -37,7 +37,7 @@ export default function EditForm<T>({ children, apiPath, method, formData }: Edi
             }
         })
     }
-
+    console.log('Rendering EditForm')
     return (
         <form onSubmit={handleSubmit}>
             {children}
@@ -51,4 +51,4 @@ export default function EditForm<T>({ children, apiPath, method, formData }: Edi
             </div>
         </form>
     )
-}
+})

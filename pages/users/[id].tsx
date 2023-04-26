@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { UserAddresses, User, Address } from '../../ts-types/types'
 import Input from "@/components/Input"
 import Select, { SelectValue } from "@/components/Select"
@@ -20,17 +20,17 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
   const { user, addresses } = data
   const [formData, setFormData] = useState<User>(user)
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(old => ({
       ...old,
       [name]: value
     }))
-  }
+  }, [])
 
-  function getAddressValues(): SelectValue[] {
+  const getAddressValues = useMemo((): SelectValue[] => {
     const options: SelectValue[] = []
-
+    
     // Display Id in Select if Address with set Id doesn't exist
     !addresses.some((a: Address) => a.addressId === user.addressId) && options.push({
       id: user.addressId,
@@ -45,7 +45,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
     })
 
     return options
-  }
+  }, [addresses, user.addressId])
 
   return (
     <main className="flex items-center justify-center p-12">
@@ -96,7 +96,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
           <Select 
             label="Address"
             name="addressId"
-            values={getAddressValues()}
+            values={getAddressValues}
             defaultValue={formData.addressId?.toString()}
             onChange={handleChange}
           />

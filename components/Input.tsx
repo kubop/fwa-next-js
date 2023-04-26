@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 interface InputProps {
     type?: string,
     name: string,
@@ -7,7 +9,8 @@ interface InputProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-export default function Input({ name, label, type = "text", value, required, onChange }: InputProps) {
+export default memo(function Input({ name, label, type = "text", value, required, onChange }: InputProps) {
+    console.log('Rendering input ' + name)
     return (
         <>
             <label htmlFor={name} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{ label }</label>
@@ -20,4 +23,4 @@ export default function Input({ name, label, type = "text", value, required, onC
             />
         </>
     )
-}
+})
