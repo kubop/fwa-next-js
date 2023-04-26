@@ -14,7 +14,7 @@ export interface User {
     login: string,
     password: string,
     newPassword: string,
-    addressId: number,
+    addressId?: number,
     address: string
   }
 
