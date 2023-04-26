@@ -9,7 +9,7 @@ interface EditFormProps<T> {
     formData: T
 }
 
-export default memo(function EditForm<T>({ children, apiPath, method, formData }: EditFormProps<T>) {
+export default function EditForm<T>({ children, apiPath, method, formData }: EditFormProps<T>) {
     const [response, setResponse] = useState<Response | null>(null)
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -51,4 +51,4 @@ export default memo(function EditForm<T>({ children, apiPath, method, formData }
             </div>
         </form>
     )
-})
+}

@@ -28,7 +28,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
     }))
   }, [])
 
-  const getAddressValues = useMemo((): SelectValue[] => {
+  const addressValues = useMemo((): SelectValue[] => {
     const options: SelectValue[] = []
     
     // Display Id in Select if Address with set Id doesn't exist
@@ -96,7 +96,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
           <Select 
             label="Address"
             name="addressId"
-            values={getAddressValues}
+            values={addressValues}
             defaultValue={formData.addressId?.toString()}
             onChange={handleChange}
           />
