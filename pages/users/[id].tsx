@@ -2,6 +2,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useState } from 'react'
 import { UserAddresses, User, Address, Response } from '../../ts-types/types'
 import Alert from "@/components/Alert"
+import Input from "@/components/Input"
+import Select, { SelectValue } from "@/components/Select"
 
 export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = async (context) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${context.params?.id}`)
@@ -55,41 +57,75 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
     })
   }
 
+  function getAddressValues(): SelectValue[] {
+    const options: SelectValue[] = []
+
+    // Display Id in Select if Address with set Id doesn't exist
+    !addresses.some((a: Address) => a.addressId === user.addressId) && options.push({
+      id: user.addressId,
+      value: user.addressId?.toString()
+    })
+
+    addresses.map((address: Address) => {
+      options.push({
+        id: address.addressId,
+        value: `${address.street} ${address.number}, ${address.zipCode} ${address.city}`
+      })
+    })
+
+    return options
+  }
+
   return (
     <main className="flex items-center justify-center p-12">
       
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
-          <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-          <input name="firstName" onChange={handleChange} value={formData.firstName} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+          <Input 
+            name="firstName"
+            label="First name"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="mb-6">
-          <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-          <input name="lastName" onChange={handleChange} value={formData.lastName} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+          <Input 
+            name="lastName"
+            label="Last name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="mb-6">
-          <label htmlFor="login" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Login</label>
-          <input name="login" onChange={handleChange} value={formData.login} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+          <Input 
+            name="login"
+            label="Login"
+            value={formData.login}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="newPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New password</label>
-          <input type="password" name="newPassword" onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          <Input 
+            type="password"
+            name="newPassword"
+            label="New password"
+            value={formData.newPassword ?? ""}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="addressId" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-          <select name="addressId" defaultValue={formData.addressId} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            {!addresses.some((a: Address) => a.addressId === user.addressId) ? <option value={user.addressId}>{user.addressId}</option> : null}
-            {addresses.map((address: Address) => 
-              <option 
-                key={address.addressId}
-                value={address.addressId}
-              >
-                {`${address.street} ${address.number}, ${address.zipCode} ${address.city}`}
-              </option>
-            )}
-          </select>
+          <Select 
+            label="Address"
+            name="addressId"
+            values={getAddressValues()}
+            defaultValue={formData.addressId?.toString()}
+            onChange={handleChange}
+          />
         </div>
 
         {response && 
