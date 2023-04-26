@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps<{users: User[]}> = async () 
 }
 
 export default function Users({ users }: InferGetServerSidePropsType<typeof getServerSideProps>) { 
-  const tableHeaders: TableHeader[] = [
+  const tableHeaders: TableHeader<User>[] = [
     { label: 'First name', sortByName: 'FirstName', objectKey: 'firstName' },
     { label: 'Last name', sortByName: 'LastName', objectKey: 'lastName' },
     { label: 'Login', sortByName: 'Login', objectKey: 'login' },

@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps<{addresses: Address[]}> = as
 }
 
 export default function Addresses({ addresses }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const tableHeaders: TableHeader[] = [
+  const tableHeaders: TableHeader<Address>[] = [
     { label: 'Street', sortByName: 'Street', objectKey: 'street' },
     { label: 'Number', sortByName: 'Number', objectKey: 'number' },
     { label: 'Zip code', sortByName: 'ZipCode', objectKey: 'zipCode' },
