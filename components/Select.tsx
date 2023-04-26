@@ -1,8 +1,13 @@
-interface SelectProps {
+export interface SelectValue {
+    id: number | undefined,
+    value: string | undefined
+}
+
+export interface SelectProps {
     name: string,
     label: string,
-    values: { id: number, value: string }[],
-    defaultValue: string,
+    values: SelectValue[],
+    defaultValue: string | undefined,
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void,
 }
 
