@@ -1,3 +1,7 @@
+/***
+ * TODO: Define some typescript interfaces
+ */
+
 import { Dispatch, createContext, useContext, useEffect, useReducer } from "react"
 
 export const UserEditsContext = createContext<number>(0)
