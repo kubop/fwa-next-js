@@ -9,6 +9,8 @@ import NProgress from "nprogress";
 import Layout from '../components/Layout'
 import { UserEditsProvider } from '@/contexts/UserEditsContext'
 
+import 'devextreme/dist/css/dx.light.css'
+
 export default function App({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();

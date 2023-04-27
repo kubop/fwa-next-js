@@ -13,6 +13,8 @@
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
+    "devextreme": "22.2.5",
+    "devextreme-react": "22.2.5",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "flowbite": "^1.6.5",
@@ -25,6 +27,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@types/nprogress": "^0.2.0"
+    "@types/nprogress": "^0.2.0",
+    "devextreme-aspnet-data-nojquery": "^2.9.2"
   }
 }
