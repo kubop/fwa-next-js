@@ -105,7 +105,7 @@ export default function UsersDevExtreme() {
                     mode="popup"
                     allowUpdating={true}
                     allowDeleting={true}
-                    allowAdding={true}
+                    allowAdding={false}
                 />
             </DataGrid>
         </main>
