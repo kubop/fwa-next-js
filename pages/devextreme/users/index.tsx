@@ -1,4 +1,5 @@
-import { Column, DataGrid, Editing, FilterRow, SearchPanel, Selection, Summary, TotalItem } from 'devextreme-react/data-grid'
+import { Address } from '@/ts-types/types'
+import { Column, DataGrid, Editing, FilterRow, Lookup, SearchPanel, Selection, Summary, TotalItem } from 'devextreme-react/data-grid'
 import CustomStore from "devextreme/data/custom_store"
 import notify from 'devextreme/ui/notify'
 
@@ -19,6 +20,18 @@ export default function UsersDevExtreme() {
 
         return fValues
     }
+
+    const lookupAddressSource = {
+        store: new CustomStore({
+            key: "addressId",
+            loadMode: "raw",
+            load: () => {
+                return fetch(process.env.NEXT_PUBLIC_API_PATH_ADDRESS)
+                    .then(response => response.json())
+                    .catch(() => { throw 'Network error' })
+            }
+        })
+    };
 
     const store = new CustomStore({
         key: 'userId',
@@ -73,7 +86,15 @@ export default function UsersDevExtreme() {
                     <Column dataField="login"/>
                 </Column>
 
-                <Column dataField="address"/>
+                <Column dataField="addressId" calculateDisplayValue={(row:any) => row.address}>
+                    <Lookup
+                        dataSource={lookupAddressSource}
+                        displayExpr={(row:Address) => { 
+                            return `${row.street} ${row.number}, ${row.zipCode} ${row.city}`
+                        }}
+                        valueExpr={"addressId"}
+                    />
+                </Column>
 
                 <FilterRow visible={true} />
                 <SearchPanel visible={true} />
