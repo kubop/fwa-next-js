@@ -27,10 +27,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
   }, [router.events])
 
   return (
-    <UserEditsProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </UserEditsProvider>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   )
 }
