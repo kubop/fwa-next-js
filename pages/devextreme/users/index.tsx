@@ -5,16 +5,33 @@ import notify from 'devextreme/ui/notify'
 export default function UsersDevExtreme() { 
     console.log('Rendering dev-extreme page')
 
+    const formattedValues = (key: any, values: object) => {
+        const fValues: any = []
+
+        for (const property in values) {
+            const op = {
+                "op": "add",
+                "path": property,
+                "value": values[property as keyof typeof values]
+            }
+            fValues.push(op)
+        }
+
+        console.log(fValues)
+
+        return fValues
+    }
+
     const store = new CustomStore({
         key: 'userId',
         loadMode: 'raw',
         load: async (options) => {
-            return fetch('https://127.0.0.1:7005/api/user')
+            return fetch(process.env.NEXT_PUBLIC_API_PATH_USER)
                 .then(res => res.json())
                 .catch(err => { throw new Error(err) })
         },
         remove: async (key) => {
-            return fetch(`https://127.0.0.1:7005/api/user/${encodeURIComponent(key)}`, {
+            return fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${encodeURIComponent(key)}`, {
                 method: 'DELETE'
             }).then(res => {
                 if (res.ok) {
@@ -26,15 +43,9 @@ export default function UsersDevExtreme() {
         },
         update: async (key, values) => {
             console.log(values)
-            return fetch(`https://127.0.0.1:7005/api/user/${encodeURIComponent(key)}`, {
+            return fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${encodeURIComponent(key)}`, {
                 method: 'PATCH',
-                body: JSON.stringify([
-                    {
-                      "path": "firstName",
-                      "op": "replace",
-                      "value": "test"
-                    }
-                  ]),
+                body: JSON.stringify(formattedValues(key, values)),
                 headers:{
                     'Content-Type': 'application/json-patch+json'
                 }
