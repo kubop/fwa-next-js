@@ -15,7 +15,8 @@ export interface User {
     password: string,
     newPassword: string,
     addressId?: number,
-    address: string
+    address: string,
+    modified: Date
   }
 
 export interface UserAddresses {

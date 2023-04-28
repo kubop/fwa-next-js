@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { UserAddresses, User, Address } from '../../ts-types/types'
 import Input from "@/components/Input"
 import Select, { SelectValue } from "@/components/Select"
-import EditForm from "@/components/EditForm"
+import EditForm, { SuccessJson } from "@/components/EditForm"
 import { useUserEditsDispatch } from "@/contexts/UserEditsContext"
 
 export const getServerSideProps: GetServerSideProps<{data: UserAddresses}> = async (context) => {
@@ -50,18 +50,30 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
     return options
   }, [addresses, user.addressId])
 
+  async function handleRefresh(): Promise<void> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_PATH_USER}/${formData.userId}`)
+    const data: UserAddresses = await res.json()
+    setFormData(data.user)
+  }
+
   return (
     <main className="flex items-center justify-center p-12">
       <EditForm
         apiPath={`${process.env.NEXT_PUBLIC_API_PATH_USER}/${user.userId}`}
         method='PUT'
         formData={formData}
-        handleSuccess={() => {
+        handleSuccess={(res: SuccessJson) => {
+          setFormData(old => ({
+            ...old,
+            modified: res.newModified
+          }))
+
           userEditsDispatch({
             type: 'increment',
             byValue: 100
           })
         }}
+        handleRefresh={handleRefresh}
       >
         <div className="mb-6">
           <Input 

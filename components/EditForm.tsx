@@ -7,10 +7,15 @@ interface EditFormProps<T> {
     apiPath: string,
     method: string
     formData: T,
-    handleSuccess(): void
+    handleSuccess(res: SuccessJson): void,
+    handleRefresh(): Promise<void>
 }
 
-export default function EditForm<T>({ children, apiPath, method, formData, handleSuccess }: EditFormProps<T>) {
+export interface SuccessJson {
+    newModified: Date
+}
+
+export default function EditForm<T>({ children, apiPath, method, formData, handleSuccess, handleRefresh }: EditFormProps<T>) {
     const [response, setResponse] = useState<Response | null>(null)
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -22,14 +27,20 @@ export default function EditForm<T>({ children, apiPath, method, formData, handl
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((res) => {
+        }).then(async (res) => {
             if (res.ok) {
                 setResponse({
                     type: "success",
                     message: "Successfully updated!" // Can get success message from backend, same as for error
                 })
 
-                handleSuccess()
+                const successJson = await res.json() as SuccessJson
+                handleSuccess(successJson)
+            } else if (res.status === 409) { // Conflict
+                setResponse({
+                    type: "conflict",
+                    message: "Entity was edited by someone else in the meantime."
+                })
             } else {
                 res.text().then(text =>
                     setResponse({
@@ -47,6 +58,14 @@ export default function EditForm<T>({ children, apiPath, method, formData, handl
             
             {response && 
                 <Alert type={response.type} text={response.message} onClose={() => setResponse(null)} />
+            }
+            {response?.type === 'conflict' && 
+                <div className="flex justify-center mb-2">
+                    <button onClick={e => {
+                        e.preventDefault()
+                        handleRefresh().then(() => setResponse(null)) 
+                    }} className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900">Refresh</button>
+                </div>
             }
 
             <div className="flex justify-center">
