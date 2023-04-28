@@ -17,8 +17,6 @@ export default function UsersDevExtreme() {
             fValues.push(op)
         }
 
-        console.log(fValues)
-
         return fValues
     }
 
@@ -49,9 +47,13 @@ export default function UsersDevExtreme() {
                 headers:{
                     'Content-Type': 'application/json-patch+json'
                 }
-            })
-            .then(() => console.log('success'))
-            .catch(() => { throw 'Network error' });
+            }).then((res) => {
+                if (res.ok) {
+                    notify("Record updated", "success")
+                } else {
+                    notify(`Error occured: ${res.status}`, "error")
+                }
+            }).catch(() => { throw 'Network error' });
         }
     })
 
