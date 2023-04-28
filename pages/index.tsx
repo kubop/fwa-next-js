@@ -1,16 +1,6 @@
-import { Button } from "devextreme-react/button"
-
 export default function Home() {
-
-  function helloWorld() {
-    alert('Hello world!')
-  }
-
   return (
     <main className="font-mono flex flex-col items-center justify-between p-24">
-
-      <Button text="Click me" onClick={helloWorld}/>
-
       <h1 className="font-bold text-6xl">Welcome to FWA</h1>
       <span>(my <i>first web application</i>)</span>
 

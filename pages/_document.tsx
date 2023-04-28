@@ -7,7 +7,7 @@ export default function Document() {
       <Head>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
       </Head>
-      <body className="dx-viewport">
+      <body>
         <Main />
         <NextScript />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></Script>
