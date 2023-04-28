@@ -65,7 +65,7 @@ export default function User({ data }: InferGetServerSidePropsType<typeof getSer
         handleSuccess={(res: SuccessJson) => {
           setFormData(old => ({
             ...old,
-            modified: res.newModified
+            VerCol: res.newVerCol
           }))
 
           userEditsDispatch({

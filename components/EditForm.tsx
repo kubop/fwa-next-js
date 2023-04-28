@@ -12,7 +12,7 @@ interface EditFormProps<T> {
 }
 
 export interface SuccessJson {
-    newModified: Date
+    newVerCol: Buffer
 }
 
 export default function EditForm<T>({ children, apiPath, method, formData, handleSuccess, handleRefresh }: EditFormProps<T>) {

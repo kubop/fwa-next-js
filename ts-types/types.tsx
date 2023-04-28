@@ -16,7 +16,8 @@ export interface User {
     newPassword: string,
     addressId?: number,
     address: string,
-    modified: Date
+    modified: Date,
+    VerCol: Buffer
   }
 
 export interface UserAddresses {
