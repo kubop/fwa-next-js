@@ -1,8 +1,6 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next"
-import { User } from "@/ts-types/types"
-
 import { Column, DataGrid, Editing, FilterRow, SearchPanel, Selection, Summary, TotalItem } from 'devextreme-react/data-grid'
 import CustomStore from "devextreme/data/custom_store"
+import notify from 'devextreme/ui/notify'
 
 export default function UsersDevExtreme() { 
     console.log('Rendering dev-extreme page')
@@ -18,9 +16,13 @@ export default function UsersDevExtreme() {
         remove: async (key) => {
             return fetch(`https://127.0.0.1:7005/api/user/${encodeURIComponent(key)}`, {
                 method: 'DELETE'
-            })
-                .then(res => console.log('Remove success'))
-                .catch(err => { throw new Error(err) })
+            }).then(res => {
+                if (res.ok) {
+                    notify("Record deleted", "success")
+                } else {
+                    notify(`Error occured: ${res.status}`, "error")
+                }
+            }).catch(err => { throw new Error(err) })
         },
         update: async (key, values) => {
             console.log(values)
